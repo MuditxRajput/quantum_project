@@ -4,13 +4,17 @@ const pdfSchema = mongoose.Schema({
         type:String,
         required:true,
     },
-    cloudinaryId:{
+    pdfSem:{
+        type:String,
+        required :true,
+    },
+    pdfYear:{
+        type: String,
+        required : true,
+    },
+    pdfLink:{
         type:String,
         required:true,
-    },
-    cloudinaryUrl:{
-        type :String,
-        required : true,
     }
 },{timestamps:true})
 
