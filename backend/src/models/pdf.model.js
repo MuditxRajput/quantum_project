@@ -15,7 +15,11 @@ const pdfSchema = mongoose.Schema({
     pdfLink:{
         type:String,
         required:true,
-    }
+    },
+    // coverImage :{
+    //     type : String,
+    //     required : true,
+    // }
 },{timestamps:true})
 
 export const Pdf = mongoose.model("Pdf",pdfSchema);

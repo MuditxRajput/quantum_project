@@ -5,8 +5,9 @@ const UserSchema = z.object({
     name : z.string(),
     email : z.string().email(),
     password : z.string().min(4),
-    sem:z.string(),
+    year:z.string(),
     clg :z.string(),
+    branch : z.string(),
 })
 
 const UserValidation=(userData)=>{

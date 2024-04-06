@@ -18,27 +18,55 @@ const uploadPdfController =async(req,res)=>{
     }
     // console.log(pdfSem,pdfName,pdfYear);
     const localFile = req.file?.path;
-    // console.log(localFile);
+
    const resFromCloudinary =  await uploadOnCloudinary(localFile)
-   const response = resFromCloudinary?.url.replace('.pdf','.jpg')
-   if(!response)
-   {
-    return res.status(500).send({msg:"Cloudinary url is empty"})
-   }
+
+//    const fisrtPageImageUrl = await getFirstPage(localFile)
+//    const response = resFromCloudinary?.url.replace('.pdf','.jpg')
+//    const response = resFromCloudinary?.url
+   const pdfLink = req.file.originalname;
+
+//    if(!response)
+//    {
+//     return res.status(500).send({msg:"Cloudinary url is empty"})
+//    }
     //  await Pdf.findOne({pdfName:pdfName,pdfYear:pdfYear})
     const pdfDetails = {
      pdfName:pdfName,
      pdfSem:pdfSem,
      pdfYear:pdfYear,
-     pdfLink:response,
+     pdfLink:pdfLink,
+    //  coverImage :fisrtPageImageUrl,
     }
     const resFromDb = await Pdf.create(pdfDetails)
    return res.status(200).send({
-    response,
     resFromDb,
     msg:"Pdf is saved in db.."
    })
 
 }
-export { uploadPdfController };
+const numberOfPdf = async(req,res)=>{
+    try {
+        const numberOfPdf = await Pdf.find();
+        if(numberOfPdf.length===0) return res.status(200).send({msg:"No pdf ",sucess:false})
+        
+        return res.status(200).send({msg:"Pdf is present",numberOfPdf})
+    } catch (error) {
+        
+    }
+
+}
+
+const singlePdfInfo =async(req,res)=>{
+        try {
+            const{name} = req.params;
+           const response =  await Pdf.findOne({"pdfName":name})
+           if(!response) return res.status(300).send({msg:"Pdf is not present..",success : false});
+
+           return res.status(200).send({msg: "Pdf data",success:true,response})
+        } catch (error) {
+            console.log(error);
+        }
+}
+export { numberOfPdf, singlePdfInfo, uploadPdfController };
 

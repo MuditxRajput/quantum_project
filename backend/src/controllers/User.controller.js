@@ -6,11 +6,12 @@ const registerRoute=async(req,res)=>{
 // user enter the details ...
 // validation using zod...
 // check user is existed or not...
-// if not then register in database..
+// if not then register in database
 try {
     // console.log("HI THRE");
-    const{userName,name,password,sem,clg,email,branch} = req.body;
-    const userData = {userName,name,password,sem,clg,email}
+    const{userName,name,password,year,email,branch,clg} = req.body;
+    const userData = {userName,name,password,year,email,branch,clg}
+    console.log(userData);
     const validateUserData = UserValidation(userData);
    //  console.log(validateUserData.error.errors.message);
     if(!validateUserData.success){
@@ -25,7 +26,7 @@ try {
         return res.status(500).send({msg:"User is already in database.."})
 
      }
-       const data=await User.create({userName,name,email,password,sem,clg,branch});
+       const data=await User.create({userName,name,email,password,year,clg});
        if(!data)
        {
         return res.status(500).send({msg:"Error in saving the data in database"})
@@ -110,5 +111,17 @@ const forgotPassword=async(req,res)=>{
          console.log(error);
       }
 }
-export { forgotPassword, loginRoute, registerRoute };
+const totalStudents =async(req,res)=>{
+   try {
+      const response = await User.find();
+      if(!response) return res.status(300).send({success:false});
+
+      const total = response.length;
+      return res.status(200).send({total})
+   } catch (error) {
+      
+   }
+
+}
+export { forgotPassword, loginRoute, registerRoute, totalStudents };
 

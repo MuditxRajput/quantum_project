@@ -35,6 +35,7 @@ const AddPdf = () => {
         body:(formData),
       });
       const val = await response.json();
+      // toast.success(val.msg)
     toast.success(val.msg)
     setPdfName("");
     setPdfSem("");

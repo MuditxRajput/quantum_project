@@ -8,7 +8,6 @@ import MobileMenu from '../Components/MobileMenu';
 import PdfArea from '../Components/PdfArea';
 const Homepage = () => {
   const isOpen = useSelector((state)=>state.user?.mobileMenu);
-  console.log(isOpen);
   return (
     <>
     {isOpen && <MobileMenu/>}

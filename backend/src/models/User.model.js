@@ -19,10 +19,6 @@ const UserSchema = mongoose.Schema({
         type:String,
         required : true,
     },
-    sem:{
-        type:String,
-        required:true,
-    },
     clg:{
         type:String,
         required :true,
@@ -34,6 +30,10 @@ const UserSchema = mongoose.Schema({
     admin:{
         type:Boolean,
         default:false
+    },
+    year:{
+        type:String,
+        required:true,
     }
 },{timestamps:true})
 
